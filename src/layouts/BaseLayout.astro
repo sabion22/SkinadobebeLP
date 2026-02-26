@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import { config } from '../config';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Skina do Bebê - Tradição e carinho para o seu bebê em Piracicaba/SP. Visite nossas lojas físicas!" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={config.general.faviconSrc} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+		
+		<style is:global define:vars={{
+			'app-brand-primary': config.theme.colors.primary,
+			'app-brand-secondary': config.theme.colors.secondary,
+			'app-brand-accent': config.theme.colors.accent,
+			'app-brand-beige': config.theme.colors.beige,
+			'app-brand-warm': config.theme.colors.warm,
+			'app-promo-red': config.theme.colors.promoRed,
+			'app-promo-yellow': config.theme.colors.promoYellow,
+			'app-promo-orange': config.theme.colors.promoOrange,
+			'app-cta-green': config.theme.colors.ctaGreen,
+		}}>
+			:root {
+				--app-brand-primary: var(--app-brand-primary);
+				--app-brand-secondary: var(--app-brand-secondary);
+				--app-brand-accent: var(--app-brand-accent);
+				--app-brand-beige: var(--app-brand-beige);
+				--app-brand-warm: var(--app-brand-warm);
+				--app-promo-red: var(--app-promo-red);
+				--app-promo-yellow: var(--app-promo-yellow);
+				--app-promo-orange: var(--app-promo-orange);
+				--app-cta-green: var(--app-cta-green);
+			}
+		</style>
+	</head>
+	<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
+		<slot />
+
+		<!-- Basic Scroll Animation Script -->
+		<script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.15 // trigger when 15% visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("aos-animate");
+              // Optional: unobserve if you only want it to fire once
+              // observer.unobserve(entry.target); 
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".aos-fade-up, .aos-zoom-in, .aos-fade-in").forEach(el => {
+          observer.observe(el);
+        });
+      });
+		</script>
+	</body>
+</html>
