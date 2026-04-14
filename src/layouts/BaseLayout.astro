@@ -3,78 +3,218 @@ import '../styles/global.css';
 import { config } from '../config';
 
 interface Props {
-	title: string;
-	description?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
 }
 
-const { title, description = "Skina do Bebê - Tradição e carinho para o seu bebê em Piracicaba/SP. Visite nossas lojas físicas!" } = Astro.props;
+const {
+  title = "Skina do Bebê | A Maior Loja de Bebês de Piracicaba",
+  description = "Skina do Bebê — mais de 10 anos de tradição em Piracicaba/SP. Berços, carrinhos, enxovais e muito mais. 2 lojas físicas, atendimento pelo WhatsApp. Visite-nos!",
+  image = config.storesInfo.stores[0].image,
+  url = "https://skinadobebe.com.br",
+} = Astro.props;
+
+// Structured Data — LocalBusiness (ambas unidades)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${url}/#organization`,
+      "name": "Skina do Bebê",
+      "url": url,
+      "logo": {
+        "@type": "ImageObject",
+        "url": config.general.logoSrc,
+        "width": 128,
+        "height": 128
+      },
+      "sameAs": [],
+      "description": description,
+    },
+    ...config.storesInfo.stores.map((store, i) => ({
+      "@type": "BabyStore",
+      "@id": `${url}/#store-${i + 1}`,
+      "name": "Skina do Bebê",
+      "alternateName": `Skina do Bebê — ${store.name}`,
+      "url": url,
+      "telephone": store.phone,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": store.address,
+        "addressLocality": "Piracicaba",
+        "addressRegion": "SP",
+        "addressCountry": "BR",
+      },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "14:00" }
+      ],
+      "geo": {
+        "@type": "GeoCoordinates",
+      },
+      "image": store.image,
+      "priceRange": "$$",
+      "paymentAccepted": "Dinheiro, Cartão de Crédito, Cartão de Débito, PIX",
+      "currenciesAccepted": "BRL",
+    })),
+    {
+      "@type": "WebSite",
+      "@id": `${url}/#website`,
+      "url": url,
+      "name": "Skina do Bebê",
+      "description": description,
+      "inLanguage": "pt-BR",
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${url}/#webpage`,
+      "url": url,
+      "name": title,
+      "description": description,
+      "isPartOf": { "@id": `${url}/#website` },
+      "inLanguage": "pt-BR",
+    }
+  ]
+};
 ---
 
 <!doctype html>
 <html lang="pt-BR">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href={config.general.faviconSrc} />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		
-		<!-- Google Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
-		
-		<style is:global define:vars={{
-			'app-brand-primary': config.theme.colors.primary,
-			'app-brand-secondary': config.theme.colors.secondary,
-			'app-brand-accent': config.theme.colors.accent,
-			'app-brand-beige': config.theme.colors.beige,
-			'app-brand-warm': config.theme.colors.warm,
-			'app-promo-red': config.theme.colors.promoRed,
-			'app-promo-yellow': config.theme.colors.promoYellow,
-			'app-promo-orange': config.theme.colors.promoOrange,
-			'app-cta-green': config.theme.colors.ctaGreen,
-		}}>
-			:root {
-				--app-brand-primary: var(--app-brand-primary);
-				--app-brand-secondary: var(--app-brand-secondary);
-				--app-brand-accent: var(--app-brand-accent);
-				--app-brand-beige: var(--app-brand-beige);
-				--app-brand-warm: var(--app-brand-warm);
-				--app-promo-red: var(--app-promo-red);
-				--app-promo-yellow: var(--app-promo-yellow);
-				--app-promo-orange: var(--app-promo-orange);
-				--app-cta-green: var(--app-cta-green);
-			}
-		</style>
-	</head>
-	<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
-		<slot />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- Basic Scroll Animation Script -->
-		<script>
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T7WM6H29');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="icon" type="image/svg+xml" href={config.general.faviconSrc} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="skina do bebê, loja de bebê piracicaba, enxoval bebê, berço, carrinho de bebê, piracicaba sp, loja infantil, quartinho bebê, kit enxoval" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="Skina do Bebê" />
+    <link rel="canonical" href={url} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Skina do Bebê" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- WhatsApp / iMessage preview -->
+    <meta property="og:image:secure_url" content={image} />
+
+    <!-- Geo Tags (Local SEO) -->
+    <meta name="geo.region" content="BR-SP" />
+    <meta name="geo.placename" content="Piracicaba" />
+    <meta name="geo.position" content="-22.6723;-47.6964" />
+    <meta name="ICBM" content="-22.6723, -47.6964" />
+
+    <!-- Performance: preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://i.postimg.cc" />
+
+    <!-- Google Fonts com display=swap (non-blocking) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- CSS Custom Properties (tokens de design) -->
+    <style is:global define:vars={{
+      'app-brand-primary': config.theme.colors.primary,
+      'app-brand-secondary': config.theme.colors.secondary,
+      'app-brand-accent': config.theme.colors.accent,
+      'app-brand-beige': config.theme.colors.beige,
+      'app-brand-warm': config.theme.colors.warm,
+      'app-promo-red': config.theme.colors.promoRed,
+      'app-promo-yellow': config.theme.colors.promoYellow,
+      'app-promo-orange': config.theme.colors.promoOrange,
+      'app-cta-green': config.theme.colors.ctaGreen,
+    }}>
+      :root {
+        --app-brand-primary: var(--app-brand-primary);
+        --app-brand-secondary: var(--app-brand-secondary);
+        --app-brand-accent: var(--app-brand-accent);
+        --app-brand-beige: var(--app-brand-beige);
+        --app-brand-warm: var(--app-brand-warm);
+        --app-promo-red: var(--app-promo-red);
+        --app-promo-yellow: var(--app-promo-yellow);
+        --app-promo-orange: var(--app-promo-orange);
+        --app-cta-green: var(--app-cta-green);
+      }
+
+      /* Performance: reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Scroll performance boost */
+      html { scroll-behavior: smooth; }
+      body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeSpeed;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 overflow-x-hidden">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T7WM6H29"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <slot />
+
+    <!-- AOS: Scroll animations — single IntersectionObserver for all  -->
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const observerOptions = {
-          root: null,
-          rootMargin: "0px",
-          threshold: 0.15 // trigger when 15% visible
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add("aos-animate");
-              // Optional: unobserve if you only want it to fire once
-              // observer.unobserve(entry.target); 
+              observer.unobserve(entry.target); // fire once only (performance)
             }
           });
-        }, observerOptions);
+        }, { rootMargin: "0px", threshold: 0.12 });
 
         document.querySelectorAll(".aos-fade-up, .aos-zoom-in, .aos-fade-in").forEach(el => {
           observer.observe(el);
         });
       });
-		</script>
-	</body>
+    </script>
+  </body>
 </html>

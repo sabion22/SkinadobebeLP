@@ -2,294 +2,321 @@
 import { config } from '../config';
 
 const { destaques, general } = config;
+const WA = general.whatsappNumber;
 
-// WhatsApp Number fallback if any product forgets to set it
-const WHATSAPP_NUMBER = general.whatsappNumber;
+// Resolve o array de imagens por produto
+type Product = (typeof destaques.products)[0];
+function getImages(product: Product): string[] {
+  return product.images && product.images.length > 0 ? product.images : [];
+}
 ---
 
-<!-- DESTAQUES DA SEMANA — Brazilian Retail Style -->
-<section id="destaques" class="relative py-20 md:py-32 overflow-hidden">
-  <!-- Warm Background with Subtle Gradient -->
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-warm via-white to-brand-warm"></div>
-  <!-- Decorative warm blobs -->
-  <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-promo-yellow/8 rounded-full blur-[120px] -translate-y-1/4 translate-x-1/4"></div>
-  <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-primary/10 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4"></div>
-  <!-- Top accent stripe -->
-  <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-promo-red via-promo-yellow to-promo-orange"></div>
+<!-- DESTAQUES DA SEMANA -->
+<section id="destaques" class="relative py-16 md:py-24">
 
-  <div class="container mx-auto px-6 md:px-12 relative z-10">
-    <!-- Section Header -->
-    <div class="flex flex-col md:flex-row items-center md:items-end justify-between mb-12 md:mb-16 gap-8 aos-fade-up">
-      <div class="max-w-2xl text-center md:text-left">
-        <!-- Pill Ofertas (Made smaller on mobile) -->
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[9px] md:text-[10px] font-black tracking-[0.25em] uppercase rounded-full mb-4 badge-hot shadow-md mb-6">
-          {destaques.pillText}
-        </span>
-        <h2 class="text-4xl md:text-6xl font-display mb-4 md:mb-5 tracking-tight text-gray-900 leading-[1.1]">
-          {destaques.headlineStart} <span class="text-promo-red">{destaques.headlineHighlight}</span>
-        </h2>
-        <p class="text-gray-600 text-base md:text-xl font-medium leading-relaxed max-w-xl">
-          {destaques.subheadlineStart} <strong class="text-gray-900">{destaques.subheadlineBold1}</strong> {destaques.subheadlineMiddle} <strong class="text-promo-red">{destaques.subheadlineBold2}</strong>{destaques.subheadlineEnd}
-        </p>
-
-        <!-- Premium Countdown Timer -->
-        {destaques.showTimer && (
-          <div class="mt-8 inline-flex flex-col items-center md:items-start">
-            <span class="text-xs font-black uppercase tracking-widest text-brand-secondary mb-3">{destaques.timerText}</span>
-            <div id="countdown-timer" class="flex gap-3 text-center" data-end={destaques.timerEndDate}>
-              <div class="flex flex-col">
-                <div class="w-14 h-16 md:w-16 md:h-18 bg-white border border-gray-200 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-100/50 mb-1">
-                  <span class="text-2xl md:text-3xl font-display font-bold text-gray-900" id="days">00</span>
-                </div>
-                <span class="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400">Dias</span>
-              </div>
-              <span class="text-2xl font-bold text-gray-300 mt-3">:</span>
-              <div class="flex flex-col">
-                <div class="w-14 h-16 md:w-16 md:h-18 bg-white border border-gray-200 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-100/50 mb-1">
-                  <span class="text-2xl md:text-3xl font-display font-bold text-gray-900" id="hours">00</span>
-                </div>
-                <span class="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400">Hrs</span>
-              </div>
-              <span class="text-2xl font-bold text-gray-300 mt-3">:</span>
-              <div class="flex flex-col">
-                <div class="w-14 h-16 md:w-16 md:h-18 bg-white border border-gray-200 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-100/50 mb-1">
-                  <span class="text-2xl md:text-3xl font-display font-bold text-gray-900" id="minutes">00</span>
-                </div>
-                <span class="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400">Min</span>
-              </div>
-              <span class="text-2xl font-bold text-gray-300 mt-3">:</span>
-              <div class="flex flex-col">
-                <div class="w-14 h-16 md:w-16 md:h-18 bg-promo-red text-white border border-promo-red/20 rounded-2xl flex items-center justify-center shadow-lg shadow-promo-red/30 mb-1">
-                  <span class="text-2xl md:text-3xl font-display font-bold" id="seconds">00</span>
-                </div>
-                <span class="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-promo-red">Seg</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-      <div class="flex gap-4 w-full md:w-auto mt-4 md:mt-0">
-        <a 
-          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(destaques.ctaMessage)}`} 
-          target="_blank" 
-          class="btn-whatsapp px-6 md:px-8 py-4 md:py-5 text-xs md:text-sm tracking-wide w-full justify-center md:w-auto"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/>
-          </svg>
-          <span class="font-black pt-0.5">{destaques.ctaText}</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- Mobile Scroll Warning / Gradient -->
-    <div class="md:hidden flex items-center justify-end mb-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-      <span class="flex items-center gap-1">Arraste para o lado <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
-    </div>
-
-    <!-- Product Grid (Carousel on Mobile) -->
-    <!-- We wrap it in a custom container for CSS marquee approach on mobile -->
-    <div class="carousel-container pb-10 md:pb-0 -mx-6 px-6 md:px-0 md:mx-0">
-      <div class="carousel-track md:!transform-none md:!animate-none flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-        {destaques.products.map((product) => (
-          <div class="carousel-item shrink-0 w-[85vw] sm:w-[50vw] md:w-auto md:shrink group relative flex flex-col pt-2 aos-zoom-in">
-          <!-- Card -->
-          <div class="relative w-full shrink-0 aspect-[4/5] md:aspect-[3/4] rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-[0_15px_40px_rgba(0,0,0,0.06)] transition-all duration-500 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] group-hover:-translate-y-2 group-hover:border-brand-primary/30">
-              <img 
-                src={product.image} 
-                alt={product.name} 
-                referrerpolicy="no-referrer"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            
-            <!-- Promo Badge — Top -->
-            <div class="absolute top-4 left-4 right-4 flex justify-between items-start">
-              <span class={`${product.badgeClass} badge-promo text-[9px] md:text-[10px]`}>
-                {product.badge}
-              </span>
-              <span class="px-3 py-1 bg-white/90 backdrop-blur-md text-[8px] md:text-[9px] font-black uppercase tracking-wider rounded-full text-gray-600 shadow-sm border border-gray-100">
-                {product.category}
-              </span>
-            </div>
-
-            <!-- Hover Overlay — WhatsApp Direct -->
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/40 to-transparent opacity-0 md:group-hover:opacity-100 transition-all duration-500 flex items-end p-6">
-              <a 
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(product.whatsappMessage)}`}
-                target="_blank"
-                class="w-full btn-whatsapp py-3.5 text-sm hidden md:flex"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/>
-                </svg>
-                <span class="font-black text-xs tracking-wide pt-0.5">{product.whatsappCtaText}</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Info Below Card -->
-          <div class="px-2 mt-5 flex flex-col flex-1">
-            <h3 class="text-xl md:text-2xl font-display text-gray-900 group-hover:text-brand-primary transition-colors duration-300 mb-1.5 leading-tight">{product.name}</h3>
-            <p class="text-gray-500 text-[13px] md:text-sm mb-4 leading-relaxed line-clamp-2 md:line-clamp-none">{product.description}</p>
-            
-            <div class="mt-auto">
-              <!-- Pricing -->
-              <div class="flex items-baseline gap-2 mb-0.5">
-                <span class="text-xs text-brand-secondary/80 bg-brand-secondary/5 font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm line-through">{product.oldPrice}</span>
-              </div>
-              <div class="flex items-center gap-2 mb-5">
-                <span class="text-[1.6rem] md:text-3xl font-black text-promo-red tracking-tight">{product.price}</span>
-              </div>
-              
-              <!-- WhatsApp CTA -->
-              <a 
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(product.whatsappMessage)}`}
-                target="_blank"
-                class="w-full btn-whatsapp py-3.5 text-[10px] md:text-xs tracking-widest uppercase md:animate-pulse-glow"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/>
-                </svg>
-                {product.whatsappLinkText}
-              </a>
-            </div>
-          </div>
-        </div>
-        ))}
-        <!-- Duplicated for seamless mobile infinite marquee -->
-        {destaques.products.map((product) => (
-          <div class="carousel-item shrink-0 w-[85vw] sm:w-[50vw] group relative flex flex-col pt-2 md:hidden">
-          <!-- Card -->
-          <div class="relative w-full shrink-0 aspect-[4/5] rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-[0_15px_40px_rgba(0,0,0,0.06)] transition-all duration-500 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)] group-hover:-translate-y-2 group-hover:border-brand-primary/30">
-              <img 
-                src={product.image} 
-                alt={product.name} 
-                referrerpolicy="no-referrer"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            
-            <!-- Promo Badge — Top -->
-            <div class="absolute top-4 left-4 right-4 flex justify-between items-start">
-              <span class={`${product.badgeClass} badge-promo text-[9px]`}>
-                {product.badge}
-              </span>
-              <span class="px-3 py-1 bg-white/90 backdrop-blur-md text-[8px] font-black uppercase tracking-wider rounded-full text-gray-600 shadow-sm border border-gray-100">
-                {product.category}
-              </span>
-            </div>
-          </div>
-
-          <!-- Info Below Card -->
-          <div class="px-2 mt-5 flex flex-col flex-1">
-            <h3 class="text-xl font-display text-gray-900 group-hover:text-brand-primary transition-colors duration-300 mb-1.5 leading-tight">{product.name}</h3>
-            <p class="text-gray-500 text-[13px] mb-4 leading-relaxed line-clamp-2">{product.description}</p>
-            
-            <div class="mt-auto">
-              <!-- Pricing -->
-              <div class="flex items-baseline gap-2 mb-0.5">
-                <span class="text-xs text-brand-secondary/80 bg-brand-secondary/5 font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm line-through">{product.oldPrice}</span>
-              </div>
-              <div class="flex items-center gap-2 mb-5">
-                <span class="text-[1.6rem] font-black text-promo-red tracking-tight">{product.price}</span>
-              </div>
-              
-              <!-- WhatsApp CTA -->
-              <a 
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(product.whatsappMessage)}`}
-                target="_blank"
-                class="w-full btn-whatsapp py-3.5 text-[10px] tracking-widest uppercase"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/>
-                </svg>
-                {product.whatsappLinkText}
-              </a>
-            </div>
-          </div>
-        </div>
-        ))}
-      </div>
-    </div>
+  <!-- Background (overflow:hidden isolado para não bloquear scroll dos produtos) -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-warm via-white to-brand-beige"></div>
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-promo-yellow/5 rounded-full blur-[150px] -translate-y-1/3 translate-x-1/3"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-primary/7 rounded-full blur-[130px] translate-y-1/3 -translate-x-1/3"></div>
+    <div class="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-promo-red via-promo-orange to-promo-yellow"></div>
   </div>
 
-  <style>
-    /* CSS Marquee approach for entirely smooth auto-scrolling on Mobile without JS jitter */
-    @media (max-width: 767px) {
-      .carousel-container {
-        overflow: hidden;
-        width: 100%;
-        position: relative;
-        touch-action: pan-y; /* allow vertical scroll, hijack horizontal via animation */
-      }
-      .carousel-track {
-        display: flex;
-        width: max-content;
-        animation: scrollX 20s linear infinite;
-        will-change: transform;
-      }
-      .carousel-container:active .carousel-track,
-      .carousel-container:hover .carousel-track {
-        animation-play-state: paused;
-      }
-      @keyframes scrollX {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-50% - 0.75rem)); } 
-      }
-      
-      /* Adding an alternate ping-pong style so it doesn't snap abruptly */
-      .carousel-track.ping-pong {
-        animation: scrollX 20s linear infinite;
-      }
-    }
-  </style>
+  <div class="container mx-auto px-6 md:px-12 relative z-10">
+
+    <!-- HEADER: título esquerda / timer direita -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-10 md:mb-14 items-center aos-fade-up">
+
+      <!-- Esquerda: Título -->
+      <div class="text-center lg:text-left">
+        <span class="inline-flex items-center gap-2 px-4 py-2 text-[10px] font-black tracking-[0.25em] uppercase rounded-full mb-5 badge-hot shadow-md">
+          {destaques.pillText}
+        </span>
+        <h2 class="text-4xl md:text-5xl font-display mb-4 tracking-tight text-gray-900 leading-[1.08]">
+          {destaques.headlineStart}&nbsp;<span class="text-promo-red">{destaques.headlineHighlight}</span>
+        </h2>
+        <p class="text-gray-500 text-base md:text-lg font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+          {destaques.subheadlineStart} <strong class="text-gray-800">{destaques.subheadlineBold1}</strong>
+          {" "}{destaques.subheadlineMiddle}{" "}
+          <strong class="text-promo-red">{destaques.subheadlineBold2}</strong>{destaques.subheadlineEnd}
+        </p>
+      </div>
+
+      <!-- Direita: Timer elegante -->
+      {destaques.showTimer && (
+        <div class="flex justify-center lg:justify-end">
+          <div class="bg-white/60 backdrop-blur-lg rounded-[2rem] border border-white p-6 sm:p-7 flex flex-col sm:flex-row items-center gap-5 sm:gap-8 shadow-[0_15px_40px_rgba(0,0,0,0.05)] w-full max-w-[480px]" role="timer" aria-label="Contador das ofertas">
+            <div class="flex flex-col items-center sm:items-start flex-shrink-0">
+               <span class="text-[9px] font-black tracking-[0.25em] uppercase text-brand-primary mb-2">Oferta Especial</span>
+               <span class="text-gray-900 font-display text-lg sm:text-xl leading-snug text-center sm:text-left max-w-[140px]">{destaques.timerText}</span>
+            </div>
+            
+            <div id="countdown-timer" class="flex items-center justify-between w-full sm:w-auto sm:justify-start gap-1 sm:gap-2 shrink-0" data-end={destaques.timerEndDate}>
+              <div class="flex flex-col items-center justify-center p-2 min-w-[3.5rem]">
+                <span id="days" class="font-display font-light text-4xl text-gray-800 tracking-tighter">00</span>
+                <span class="text-[9px] uppercase tracking-widest text-gray-400 font-bold mt-1">Dias</span>
+              </div>
+              <span class="text-2xl text-gray-300 font-light pb-4">:</span>
+              <div class="flex flex-col items-center justify-center p-2 min-w-[3.5rem]">
+                <span id="hours" class="font-display font-light text-4xl text-gray-800 tracking-tighter">00</span>
+                <span class="text-[9px] uppercase tracking-widest text-gray-400 font-bold mt-1">Hrs</span>
+              </div>
+              <span class="text-2xl text-gray-300 font-light pb-4">:</span>
+              <div class="flex flex-col items-center justify-center p-2 min-w-[3.5rem]">
+                <span id="minutes" class="font-display font-light text-4xl text-brand-primary tracking-tighter font-medium">00</span>
+                <span class="text-[9px] uppercase tracking-[0.2em] text-brand-primary/60 font-bold mt-1">Min</span>
+              </div>
+              <span class="text-2xl text-gray-300 font-light pb-4">:</span>
+              <div class="flex flex-col items-center justify-center p-2 min-w-[3.5rem]">
+                <span id="seconds" class="font-display font-light text-4xl text-brand-primary tracking-tighter font-medium">00</span>
+                <span class="text-[9px] uppercase tracking-[0.2em] text-brand-primary/60 font-bold mt-1">Seg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- PRODUTOS (mobile: scroll nativo snap; desktop: grid 4 colunas) -->
+    <div
+      id="products-scroll"
+      class="overflow-x-auto md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 pb-6 md:pb-0"
+    >
+      <div class="products-flex flex flex-nowrap w-max md:w-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {destaques.products.map((product) => {
+          const imgs = getImages(product);
+          const waLink = `https://wa.me/${WA}?text=${encodeURIComponent(product.whatsappMessage)}`;
+          const carouselId = `carousel-${product.id}`;
+          return (
+            <div
+              class="product-card shrink-0 w-[76vw] sm:w-72 md:w-auto group flex flex-col"
+              data-total={imgs.length}
+            >
+              <!-- Carrossel de fotos do produto -->
+              <div
+                id={carouselId}
+                class="product-photo-carousel relative rounded-[1.75rem] overflow-hidden bg-gray-100 shadow-[0_12px_40px_rgba(0,0,0,0.07)]"
+                style="aspect-ratio:4/5;"
+                data-carousel
+              >
+                <!-- Track -->
+                <div class="photo-track absolute inset-0 flex"
+                  style="width:100%; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);">
+                  {imgs.map((img, i) => (
+                    <img
+                      src={img}
+                      alt={`${product.name} — foto ${i + 1}`}
+                      class="shrink-0 object-cover"
+                      style="width:100%;height:100%;flex-shrink:0;"
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  ))}
+                </div>
+
+                <!-- Dots (só quando há múltiplas imagens) -->
+                {imgs.length > 1 && (
+                  <div class="photo-dots-row absolute bottom-3 inset-x-0 flex justify-center gap-1.5 z-10 pointer-events-none">
+                    {imgs.map((_, i) => (
+                      <span
+                        class={`photo-dot w-2 h-2 rounded-full bg-white transition-opacity duration-300 ${i === 0 ? 'opacity-100' : 'opacity-35'}`}
+                      ></span>
+                    ))}
+                  </div>
+                )}
+
+                <!-- Desktop hover: QUERO ESSE! -->
+                <div class="hover-overlay absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-900/20 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 flex items-end p-5">
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full btn-whatsapp py-3.5 text-xs font-black tracking-widest uppercase hidden md:flex"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/></svg>
+                    {product.whatsappCtaText}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Info abaixo da foto -->
+              <div class="mt-4 px-0.5 flex flex-col flex-1">
+                <!-- Badge acima do título -->
+                <span class={`${product.badgeClass} badge-promo self-start mb-2 text-[9px]`}>
+                  {product.badge}
+                </span>
+                <h3 class="text-lg md:text-xl font-display text-gray-900 group-hover:text-brand-primary transition-colors duration-300 mb-1.5 leading-tight">
+                  {product.name}
+                </h3>
+                <p class="text-gray-400 text-[12px] md:text-sm leading-relaxed line-clamp-2 mb-3">
+                  {product.description}
+                </p>
+                <p class="text-brand-primary font-black text-[11px] uppercase tracking-widest mt-auto">
+                  {product.price}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- CTA ÚNICO abaixo dos produtos -->
+    <div class="mt-10 md:mt-14 flex justify-center aos-fade-up">
+      <a
+        href={`https://wa.me/${WA}?text=${encodeURIComponent(destaques.ctaMessage)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        id="destaques-cta"
+        class="btn-whatsapp px-10 md:px-16 py-4 md:py-5 text-sm md:text-base font-black tracking-wide animate-pulse-glow w-full sm:w-auto justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/></svg>
+        <span>{destaques.ctaText}</span>
+      </a>
+    </div>
+
+  </div>
 </section>
 
-<!-- Countdown Script -->
+<style>
+  /* ── MOBILE SCROLL ── */
+  @media (max-width: 767px) {
+    #products-scroll {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+    #products-scroll:active { cursor: grabbing; }
+    #products-scroll::-webkit-scrollbar { display: none; }
+    .product-card { scroll-snap-align: start; }
+  }
+</style>
+
 <script>
-  function updateTimer() {
-    const timerElement = document.getElementById('countdown-timer');
-    if (!timerElement) return;
+  // ── TIMER ──────────────────────────────────────────────
+  (function initTimer() {
+    const el = document.getElementById('countdown-timer');
+    if (!el) return;
+    const timerEl = el as HTMLElement;
+    const endMs = new Date(timerEl.getAttribute('data-end') || '').getTime();
+    if (isNaN(endMs)) return;
 
-    const endDate = new Date(timerElement.getAttribute('data-end') || '').getTime();
-    
+    function pad(n: number) { return String(n).padStart(2, '0'); }
     function tick() {
-      const now = new Date().getTime();
-      const distance = endDate - now;
-
-      if (distance < 0) {
-        timerElement.innerHTML = '<span class="text-promo-red font-bold text-sm">OFERTA EXPIRADA</span>';
+      const dist = endMs - Date.now();
+      if (dist < 0) {
+        timerEl.innerHTML = '<span style="color:#d91479;font-weight:900;font-size:1rem;letter-spacing:0.1em;">OFERTA ENCERRADA</span>';
         return;
       }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      const eDays = document.getElementById('days');
-      if(eDays) eDays.innerText = String(days).padStart(2, '0');
-      
-      const eHrs = document.getElementById('hours');
-      if(eHrs) eHrs.innerText = String(hours).padStart(2, '0');
-
-      const eMins = document.getElementById('minutes');
-      if(eMins) eMins.innerText = String(minutes).padStart(2, '0');
-
-      const eSecs = document.getElementById('seconds');
-      if(eSecs) eSecs.innerText = String(seconds).padStart(2, '0');
+      const d = Math.floor(dist / 86400000);
+      const h = Math.floor((dist % 86400000) / 3600000);
+      const m = Math.floor((dist % 3600000) / 60000);
+      const s = Math.floor((dist % 60000) / 1000);
+      const eDays = document.getElementById('days');    if (eDays) eDays.textContent = pad(d);
+      const eHrs  = document.getElementById('hours');   if (eHrs)  eHrs.textContent  = pad(h);
+      const eMins = document.getElementById('minutes'); if (eMins) eMins.textContent = pad(m);
+      const eSecs = document.getElementById('seconds'); if (eSecs) eSecs.textContent = pad(s);
     }
-
     tick();
     setInterval(tick, 1000);
-  }
+  })();
 
-  // initialize
-  updateTimer();
+  // ── AUTO-SCROLL LENTO DA GALERIA DE PRODUTOS (mobile only) ─
+  (function initProductsAutoScroll() {
+    const scroller = document.getElementById('products-scroll') as HTMLElement | null;
+    const track = scroller?.querySelector('.products-flex') as HTMLElement | null;
+    if (!scroller || !track) return;
+    
+    // Só ativa no mobile (largura < 768px)
+    if (window.innerWidth >= 768) return;
 
-  // Apply ping-pong class if we have elements to scroll on mobile
-  if (window.innerWidth < 768) {
-    const track = document.querySelector('.carousel-track');
-    if (track) {
-      track.classList.add('ping-pong');
+    // Desativa span no CSS para que o JS possa rolar 1px fluidamente
+    scroller.style.scrollSnapType = 'none';
+
+    // Duplica o conteúdo (HTML) para criar efeito infinito sem pulo seco
+    const originalHTML = track.innerHTML;
+    track.innerHTML = originalHTML + originalHTML;
+
+    let halfWidth = 0;
+    setTimeout(() => { 
+       halfWidth = scroller.scrollWidth / 2; 
+    }, 500);
+
+    let scrollPos = 0;
+    let reqId: number;
+    let touched = false;
+
+    function crawl() {
+      if (!touched && halfWidth > 0) {
+        scrollPos += 0.4; // bem devagar
+        if (scrollPos >= halfWidth) {
+          scrollPos = 0;
+        }
+        scroller!.scrollLeft = scrollPos;
+      }
+      reqId = requestAnimationFrame(crawl);
     }
-  }
+    requestAnimationFrame(crawl);
+
+    scroller.addEventListener('touchstart', () => {
+      touched = true;
+      cancelAnimationFrame(reqId);
+      scroller!.style.scrollSnapType = 'x mandatory'; 
+    }, { passive: true });
+
+    scroller.addEventListener('touchend', () => {
+      setTimeout(() => {
+        touched = false;
+        scroller!.style.scrollSnapType = 'none'; 
+        scrollPos = scroller!.scrollLeft; 
+        requestAnimationFrame(crawl);
+      }, 1500);
+    }, { passive: true });
+  })();
+
+  // ── CARROSSEL DE FOTOS POR PRODUTO ──────────────────────
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(carousel => {
+    const track = carousel.querySelector<HTMLElement>('.photo-track');
+    const dots  = carousel.querySelectorAll<HTMLElement>('.photo-dot');
+    if (!track) return;
+    const total = track.children.length;
+    if (total <= 1) return;
+
+    let current = 0;
+
+    function goTo(idx: number) {
+      current = ((idx % total) + total) % total;
+      track!.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, i) => {
+        d.style.opacity = i === current ? '1' : '0.35';
+      });
+    }
+
+    let interval = window.setInterval(() => goTo(current + 1), 3000);
+
+    // Touch
+    let touchX = 0;
+    carousel.addEventListener('touchstart', e => {
+      touchX = e.touches[0].clientX;
+      clearInterval(interval);
+    }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const diff = touchX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 35) goTo(current + (diff > 0 ? 1 : -1));
+      interval = window.setInterval(() => goTo(current + 1), 3000);
+    }, { passive: true });
+
+    // Mouse drag
+    let mouseX = 0, dragging = false;
+    carousel.addEventListener('mousedown', e => { mouseX = e.clientX; dragging = true; clearInterval(interval); });
+    carousel.addEventListener('mouseup', e => {
+      if (!dragging) return;
+      dragging = false;
+      const diff = mouseX - e.clientX;
+      if (Math.abs(diff) > 35) goTo(current + (diff > 0 ? 1 : -1));
+      interval = window.setInterval(() => goTo(current + 1), 3000);
+    });
+    carousel.addEventListener('mouseleave', () => { dragging = false; });
+  });
 </script>

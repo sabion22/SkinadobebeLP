@@ -2,141 +2,274 @@
 import { config } from '../config';
 
 const { history, storesInfo, general } = config;
+
+type Store = (typeof storesInfo.stores)[0] & { whatsappNumber?: string; whatsappDisplay?: string; };
 ---
 
-<!-- OWNER STORY + HISTORY — Emotional Connection Block -->
+<!-- ════════════════════════════════════════════════════
+     PARTE 1 — HISTÓRIA DO DONO
+     ════════════════════════════════════════════════════ -->
 <section id="historia" class="relative overflow-hidden">
-  <!-- PART 1: Owner Storytelling — Full Width Emotional Block -->
-  <div class="relative py-20 md:py-32 bg-gray-900 overflow-hidden text-white">
-    <!-- Clean Dark Background (No overpowering gradients for a more premium look) -->
-    
-    <div class="container mx-auto px-6 md:px-12">
-    <!-- Section Header border-brand-primary/20 text-brand-primary bg-brand-primary/10 -->
-    <div class="text-center mb-16 md:mb-24 aos-fade-up">
-      <span class="inline-block px-4 py-2 border border-brand-primary/30 rounded-full font-black uppercase tracking-[0.3em] text-[10px] text-brand-primary mb-6 shadow-sm">{history.pillText}</span>
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-display tracking-tight leading-[1.1] max-w-2xl mx-auto text-white">
-        {history.headlineStart} <span class="text-brand-primary block mt-1">{history.headlineHighlight}</span>
-      </h2>
-    </div>
+  <div class="relative py-20 md:py-32 bg-gradient-to-br from-white via-brand-warm/40 to-brand-beige">
 
-    <!-- Layout Container: Vertical Stack as requested -->
-    <div class="flex flex-col items-center max-w-4xl mx-auto gap-12 md:gap-16">
-      
-      <!-- Center: Image -->
-      <div class="w-full relative justify-center flex aos-zoom-in">
-          <div class="w-full max-w-xl h-[28rem] md:h-[36rem] rounded-[2.5rem] overflow-hidden shadow-2xl bg-white/5 border border-white/10 relative transform hover:scale-[1.02] transition-transform duration-500">
-            <img 
-              src={history.ownerImage} 
-              alt="Fundador"
-              class="absolute inset-0 w-full h-full object-cover object-top"
-              loading="lazy"
-            />
+    <!-- Decorações de fundo -->
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[180px] -translate-y-1/4 translate-x-1/4 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-secondary/8 rounded-full blur-[140px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 md:px-12">
+
+      <!-- Pill central -->
+      <div class="flex justify-center mb-12 md:mb-16 aos-fade-up">
+        <span class="inline-flex items-center gap-2 px-5 py-2.5 border border-brand-primary/25 rounded-full font-black uppercase tracking-[0.3em] text-[10px] text-brand-primary bg-brand-primary/5 shadow-sm">
+          <span class="relative flex h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-60"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
+          </span>
+          {history.pillText}
+        </span>
+      </div>
+
+      <!-- GRID: foto esquerda / texto direita -->
+      <div class="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 md:gap-16 lg:gap-20 items-center">
+
+        <!-- Coluna esquerda — Foto estilizada -->
+        <div class="flex justify-center lg:justify-end aos-zoom-in">
+          <div class="relative">
+
+            <!-- Anéis decorativos -->
+            <div class="absolute -inset-4 rounded-[2.5rem] border border-brand-primary/10 rotate-3 pointer-events-none"></div>
+            <div class="absolute -inset-7 rounded-[3rem] border border-brand-primary/5 -rotate-2 pointer-events-none"></div>
+
+            <!-- Frame da foto -->
+            <div class="relative w-72 md:w-80 xl:w-96 h-[400px] md:h-[480px] rounded-[2.25rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.18)] border-4 border-white -rotate-1 hover:rotate-0 transition-transform duration-700">
+              <img
+                src={history.ownerImage}
+                alt="Fundadores da Skina do Bebê"
+                class="w-full h-full object-cover object-top scale-[1.02] hover:scale-100 transition-transform duration-700"
+                loading="lazy"
+              />
+              <!-- Overlay suave -->
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent pointer-events-none"></div>
+            </div>
+
+            <!-- Badge +10 anos sobreposto -->
+            <div class="absolute -top-5 -right-5 w-20 h-20 bg-brand-primary rounded-full flex flex-col items-center justify-center shadow-xl shadow-brand-primary/40 border-4 border-white rotate-12 z-10">
+              <span class="text-white font-black text-[15px] leading-none">10+</span>
+              <span class="text-white/80 font-bold text-[8px] uppercase tracking-wide leading-none">anos</span>
+            </div>
           </div>
         </div>
 
-      <!-- Below: Emotional Text Block -->
-      <div class="w-full max-w-3xl text-center aos-fade-up z-20">
-        <div class="space-y-6 text-white/80 text-[16px] md:text-xl font-medium leading-relaxed bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-10 rounded-[2rem]">
-          {history.paragraphs.map(p => (
-            <p set:html={p}></p>
-          ))}
-        </div>
-      </div>
+        <!-- Coluna direita — Texto + Stats -->
+        <div class="flex flex-col items-center lg:items-start text-center lg:text-left aos-fade-up">
 
-      <!-- Bottom: Stats Block -->
-      <div class="w-full rounded-[2.5rem] bg-white/5 border border-brand-primary/20 p-8 md:p-12 relative overflow-hidden aos-fade-up">
-          <div class="flex flex-col md:flex-row items-center justify-around gap-10 md:gap-6 relative overflow-hidden group">
-            <!-- decorative background in stats -->
-            <div class="absolute inset-0 bg-brand-primary/5 group-hover:bg-brand-primary/10 transition-colors duration-500"></div>
-            
-            {history.stats.map(stat => (
-              <div class="flex flex-col items-center text-center gap-2 relative z-10 w-full md:w-1/3">
-                <span class={`text-5xl md:text-6xl font-black ${stat.highlightColor}`}>{stat.number}</span>
-                <span class="text-[11px] md:text-[13px] uppercase font-bold tracking-widest text-white/70 leading-tight">
-                  {stat.labelLines[0]}<br/>{stat.labelLines[1]}
-                </span>
-              </div>
+          <!-- Headline -->
+          <h2 class="text-4xl md:text-5xl xl:text-6xl font-display tracking-tight leading-[1.08] mb-8 text-gray-900">
+            {history.headlineStart}
+            <span class="block text-brand-primary mt-1 italic">{history.headlineHighlight}</span>
+          </h2>
+
+          <!-- Parágrafos -->
+          <div class="space-y-5 text-gray-600 text-base md:text-[17px] font-medium leading-relaxed max-w-2xl mb-10">
+            {history.paragraphs.map(p => (
+              <p set:html={p}></p>
             ))}
           </div>
 
-          <!-- CTA inside stats area or below -->
-          <div class="mt-10 flex justify-center w-full">
-            <a 
-              href={`https://wa.me/${general.whatsappNumber}?text=${encodeURIComponent(history.ctaMessage)}`}
-              target="_blank"
-              class="btn-whatsapp inline-flex items-center gap-3 px-8 md:px-10 py-5 text-sm md:text-base w-full sm:w-auto justify-center shadow-2xl"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/>
-              </svg>
-              <span class="font-black pt-0.5">{history.ctaText}</span>
-            </a>
+          <!-- Stats — inline sem box em volta -->
+          <div class="flex flex-col sm:flex-row items-center lg:items-start gap-0 w-full max-w-sm sm:max-w-none">
+            {history.stats.map((stat, i) => {
+              // Extrai valor numérico e sufixo: "10+" → {val:10, suf:"+"} | "5mil+" → {val:5, suf:"mil+"}
+              const match = stat.number.match(/^(\d+)(.*)$/);
+              const countVal = match ? parseInt(match[1], 10) : 0;
+              const countSuf = match ? match[2] : '';
+              return (
+                <div class={`flex flex-col items-center py-6 sm:py-0 sm:px-8 ${i > 0 ? 'border-t sm:border-t-0 sm:border-l border-gray-200 w-full sm:w-auto' : 'w-full sm:w-auto'}`}>
+                  <span
+                    class={`stat-number text-5xl md:text-6xl font-black leading-none mb-2 ${stat.highlightColor}`}
+                    data-countup
+                    data-count={countVal}
+                    data-suffix={countSuf}
+                  >
+                    0{countSuf}
+                  </span>
+                  <span class="text-[11px] md:text-xs uppercase font-bold tracking-widest text-gray-400 leading-tight text-center">
+                    {stat.labelLines[0]}<br/>{stat.labelLines[1]}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- PART 2: Store Locations — Clean Cards + Images -->
-  <div class="py-24 md:py-32 bg-brand-beige">
-    <div class="container mx-auto px-6 md:px-12">
-      <div class="text-center mb-16 aos-fade-up">
-        <span class="inline-block px-4 py-2 border border-brand-primary/30 rounded-full font-black uppercase tracking-[0.3em] text-[10px] text-brand-primary mb-6 bg-white/50">{storesInfo.pillText}</span>
-        <h2 class="text-4xl md:text-5xl font-display mb-6 tracking-tight">{storesInfo.headlineStart} <span class="text-brand-primary">{storesInfo.headlineHighlight}</span></h2>
-        <p class="text-gray-500 text-lg md:text-xl font-medium max-w-xl mx-auto">{storesInfo.subheadline}</p>
+  <!-- ════════════════════════════════════════════════════
+       PARTE 2 — NOSSAS LOJAS
+       ════════════════════════════════════════════════════ -->
+  <div class="relative py-20 md:py-28 overflow-hidden">
+    <!-- Background com mais personalidade -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-brand-warm"></div>
+    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary pointer-events-none"></div>
+    <!-- Blob decorativo -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[500px] h-[500px] bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute left-0 bottom-0 translate-y-1/3 -translate-x-1/3 w-[400px] h-[400px] bg-brand-secondary/6 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+
+      <!-- Header da seção -->
+      <div class="text-center mb-14 md:mb-20 aos-fade-up">
+        <span class="inline-block px-5 py-2.5 border border-brand-primary/25 rounded-full font-black uppercase tracking-[0.3em] text-[10px] text-brand-primary mb-6 bg-brand-primary/5 shadow-sm">
+          {storesInfo.pillText}
+        </span>
+        <h2 class="text-4xl md:text-5xl font-display mb-4 tracking-tight text-gray-900">
+          {storesInfo.headlineStart} <span class="text-brand-primary">{storesInfo.headlineHighlight}</span>
+        </h2>
+        <p class="text-gray-500 text-lg md:text-xl font-medium max-w-xl mx-auto">
+          {storesInfo.subheadline}
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
-        {storesInfo.stores.map((store, index) => (
-          <div class="card-premium relative overflow-hidden group hover:border-brand-primary/30 flex flex-col h-full bg-white shadow-[0_20px_50px_rgba(0,0,0,0.06)] p-0 rounded-3xl md:rounded-[2.5rem] aos-fade-up" style={`animation-delay: ${index * 0.2}s`}>
-            
-            <!-- Store Image -->
-            <div class="w-full h-56 md:h-64 overflow-hidden relative">
-              <img src={store.image} alt={store.name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <!-- Badge overlay -->
-              <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-                <span class="text-[10px] font-black uppercase tracking-widest text-brand-primary">Unidade {index + 1}</span>
-              </div>
-            </div>
-
-            <!-- Content -->
-            <div class="p-8 md:p-10 flex flex-col grow">
-              <h3 class="text-2xl md:text-3xl font-display mb-6 text-gray-900">{store.name}</h3>
-              
-              <!-- Contact Details Grid -->
-              <div class="grid grid-cols-1 gap-4 mb-8">
-                <div class="flex items-start gap-4">
-                  <div class="bg-brand-primary/10 p-3 rounded-full shrink-0 text-brand-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                  </div>
-                  <div class="flex flex-col pt-1">
-                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-1">Endereço</span>
-                    <span class="text-gray-900 font-medium">{store.address} - {store.city}</span>
-                  </div>
-                </div>
-                
-                <div class="flex items-start gap-4">
-                  <div class="bg-brand-primary/10 p-3 rounded-full shrink-0 text-brand-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  </div>
-                  <div class="flex flex-col pt-1">
-                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider mb-1">Telefone</span>
-                    <a href={`tel:${store.phone.replace(/\D/g, '')}`} class="text-gray-900 font-black text-lg hover:text-brand-primary transition-colors">{store.phone}</a>
-                  </div>
+      <!-- Cards das lojas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+        {(storesInfo.stores as Store[]).map((store, index) => {
+          const storeWa = store.whatsappNumber || general.whatsappNumber;
+          const waLink = `https://wa.me/${storeWa}?text=${encodeURIComponent("Olá! Gostaria de mais informações sobre a loja " + store.name + ".")}`;
+          return (
+            <div
+              class="group bg-white rounded-[2rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.07)] border border-gray-100 hover:border-brand-primary/20 hover:shadow-[0_30px_80px_rgba(217,20,121,0.1)] transition-all duration-500 flex flex-col aos-fade-up"
+              style={`animation-delay:${index * 0.15}s`}
+            >
+              <!-- Imagem da loja -->
+              <div class="relative h-56 md:h-64 overflow-hidden">
+                <img
+                  src={store.image}
+                  alt={store.name}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent"></div>
+                <!-- Badge unidade -->
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-white/50">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-brand-primary">Unidade {index + 1}</span>
                 </div>
               </div>
 
-              <!-- Map Button -->
-              <div class="mt-auto pt-4 border-t border-gray-100">
-                <a href={store.map} target="_blank" class="w-full flex items-center justify-center gap-3 text-sm font-black uppercase tracking-widest text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 border-2 border-brand-primary/20 rounded-full px-8 py-4 bg-white shadow-sm hover:shadow-lg">
-                  VER NO MAPA
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="translate-y-px"><path d="m12 5 7 7-7 7"/><path d="M5 12h14"/></svg>
-                </a>
+              <!-- Conteúdo -->
+              <div class="p-7 md:p-9 flex flex-col grow">
+                <h3 class="text-2xl md:text-3xl font-display mb-6 text-gray-900">{store.name}</h3>
+
+                <!-- Contatos grid -->
+                <div class="space-y-4 mb-7">
+
+                  <!-- Endereço -->
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 w-10 h-10 bg-brand-primary/8 rounded-xl flex items-center justify-center text-brand-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="flex flex-col pt-0.5">
+                      <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-0.5">Endereço</span>
+                      <span class="text-gray-800 font-medium text-sm">{store.address}</span>
+                      <span class="text-gray-500 text-sm">{store.city}</span>
+                    </div>
+                  </div>
+
+                  <!-- Telefone fixo -->
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 w-10 h-10 bg-brand-primary/8 rounded-xl flex items-center justify-center text-brand-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="flex flex-col pt-0.5">
+                      <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-0.5">Telefone</span>
+                      <a href={`tel:${store.phone.replace(/\D/g, '')}`} class="text-gray-900 font-black text-base hover:text-brand-primary transition-colors">
+                        {store.phone}
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- WhatsApp da Unidade (exibido como texto, não link) -->
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 w-10 h-10 bg-cta-green/10 rounded-xl flex items-center justify-center text-cta-green">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/></svg>
+                    </div>
+                    <div class="flex flex-col pt-0.5">
+                      <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider mb-0.5">WhatsApp</span>
+                      <span class="text-cta-green font-black text-base select-all">
+                        {(store as Store).whatsappDisplay || store.phone}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botões de ação -->
+                <div class="mt-auto space-y-3 pt-5 border-t border-gray-100">
+                  <!-- Criar Rota — botão principal -->
+                  <a
+                    href={store.map}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full flex items-center justify-center gap-3 text-sm font-black uppercase tracking-widest text-white bg-brand-primary rounded-full px-6 py-4 shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 hover:opacity-90 transition-all duration-300"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    Criar Rota Agora
+                  </a>
+                  <!-- WhatsApp — botão secundário -->
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full flex items-center justify-center gap-3 text-sm font-black uppercase tracking-widest text-cta-green border-2 border-cta-green/25 rounded-full px-6 py-3.5 hover:bg-cta-green hover:text-white hover:border-cta-green transition-all duration-300"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/></svg>
+                    Chamar no WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  // ── COUNT-UP ANIMATION nos stats da bio ──────────────────
+  const countEls = document.querySelectorAll<HTMLElement>('[data-countup]');
+
+  if (countEls.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.count || '0', 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1800;
+        const startTime = performance.now();
+
+        function easeOutCubic(t: number): number {
+          return 1 - Math.pow(1 - t, 3);
+        }
+
+        function tick(now: number) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = easeOutCubic(progress);
+          const current = Math.floor(eased * target);
+          el.textContent = current + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            el.textContent = target + suffix;
+          }
+        }
+
+        requestAnimationFrame(tick);
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.4 });
+
+    countEls.forEach(el => observer.observe(el));
+  }
+</script>

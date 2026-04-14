@@ -76,7 +76,15 @@ const year = new Date().getFullYear();
       <p>© {year} {footer.copyright}</p>
       <div class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full">
         <span>Criado por</span>
-        <span class="text-white font-black tracking-widest text-xs uppercase">{footer.developer}</span>
+        {footer.developerLogo ? (
+          <img
+            src={footer.developerLogo}
+            alt={footer.developer}
+            class="h-4 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+          />
+        ) : (
+          <span class="text-white font-black tracking-widest text-xs uppercase">{footer.developer}</span>
+        )}
       </div>
     </div>
   </div>

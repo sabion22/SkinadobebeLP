@@ -4,150 +4,166 @@ import { config } from '../config';
 const { vsl } = config;
 ---
 
-<!-- VSL SECTION — Self-Hosted HTML5 Video Player -->
-<section id="vsl" class="relative py-20 md:py-32 bg-white overflow-hidden">
+<!-- VSL SECTION -->
+<section id="vsl" class="relative py-12 md:py-16 bg-white overflow-hidden">
   <div class="container mx-auto px-6 md:px-12">
-    <!-- Section Header border-brand-primary/20 text-brand-primary bg-brand-primary/10 -->
-    <div class="text-center mb-12 md:mb-16 aos-fade-up">
+
+    <!-- Section Header -->
+    <div class="text-center mb-10 md:mb-12 aos-fade-up">
       <span class="inline-flex items-center gap-2 px-4 py-2 text-[10px] sm:text-xs font-black tracking-[0.25em] text-brand-primary uppercase bg-white rounded-full border border-brand-primary/20 mb-6 shadow-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
         {vsl.pillText}
       </span>
-      <h2 class="flex flex-col items-center justify-center font-display mb-6 tracking-tight">
-        <span class="text-3xl md:text-4xl text-gray-500 font-medium tracking-wide mb-2">{vsl.headlineLine1}</span>
-        <span class="text-5xl md:text-6xl lg:text-7xl font-bold text-brand-primary italic leading-none text-center drop-shadow-sm">{vsl.headlineLine2}</span>
+      <h2 class="flex flex-col items-center justify-center font-display mb-4 tracking-tight">
+        <span class="text-2xl md:text-4xl text-gray-500 font-medium tracking-wide mb-1">{vsl.headlineLine1}</span>
+        <span class="text-4xl md:text-6xl lg:text-7xl font-bold text-brand-primary italic leading-none text-center drop-shadow-sm">{vsl.headlineLine2}</span>
       </h2>
-      <p class="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+      <p class="text-gray-500 text-base md:text-xl max-w-2xl mx-auto font-medium">
         {vsl.subheadline}
       </p>
     </div>
 
-    <!-- Video Container -->
-    <div class="relative mx-auto max-w-5xl aos-fade-up" style="animation-delay: 0.2s;">
-      <div 
+    <!-- Video / Poster Container -->
+    <div class="relative mx-auto max-w-2xl aos-fade-up" style="animation-delay: 0.2s;">
+      <div
         id="vsl-wrapper"
-        class={`relative rounded-3xl md:rounded-[3rem] overflow-hidden shadow-[0_30px_80px_rgba(232,155,147,0.2)] border-8 border-white ${vsl.videoAspectRatio} ${vsl.videoMaxHeightDesktop} bg-gray-900 mx-auto w-full max-w-[400px] md:max-w-none`}
+        class={`relative rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-[0_30px_80px_rgba(217,20,121,0.15)] border-4 md:border-8 border-white ${vsl.videoAspectRatio} ${vsl.videoMaxHeightDesktop} bg-gray-900 mx-auto w-full max-w-[360px] md:max-w-[480px]`}
       >
-        <!-- HTML5 Video Player -->
-        <video 
-          id="vsl-video"
-          class="w-full h-full object-cover"
-          poster={vsl.posterSrc}
-          preload="metadata"
-          playsinline
-          muted
-          loop
-        >
-          <source src={vsl.videoSrc} type="video/mp4" />
-          Seu navegador não suporta vídeos HTML5.
-        </video>
-
-        <!-- Brand-Primary overlay when muted (cinematic feel but using brand colors!) -->
-        <div 
-          id="vsl-muted-overlay"
-          class="absolute inset-0 bg-brand-primary/70 backdrop-blur-[2px] transition-all duration-700 flex items-center justify-center cursor-pointer"
-        >
-          <div class="flex flex-col items-center gap-4 md:gap-6">
-            <!-- Sound wave icon -->
-            <div class="w-20 h-20 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center shadow-2xl animate-breathe">
-              <div class="flex items-end gap-1.5 h-8 md:h-10">
-                <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay: 0s; height: 60%;"></span>
-                <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay: 0.15s; height: 100%;"></span>
-                <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay: 0.3s; height: 40%;"></span>
-                <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay: 0.45s; height: 80%;"></span>
-                <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay: 0.6s; height: 55%;"></span>
+        {vsl.usePosterFallback ? (
+          /* ── PLACEHOLDER MODE (sem vídeo ainda) ── */
+          <div class="absolute inset-0 flex items-center justify-center">
+            {/* Imagem de fundo */}
+            <img
+              src={vsl.posterSrc}
+              alt="Vídeo Skina do Bebê — em breve"
+              class="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            {/* Overlay */}
+            <div class="absolute inset-0 bg-brand-primary/60 backdrop-blur-[3px]"></div>
+            {/* Conteúdo central */}
+            <div class="relative z-10 flex flex-col items-center gap-5 px-8 text-center">
+              <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary ml-1" aria-hidden="true">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-white font-display text-xl md:text-2xl font-bold mb-1 drop-shadow-lg">
+                  Vídeo em breve
+                </p>
+                <p class="text-white/75 text-xs md:text-sm font-medium uppercase tracking-widest">
+                  Conteúdo sendo produzido
+                </p>
               </div>
             </div>
-            <!-- Text -->
-            <div class="text-center px-6">
-              <span class="block text-white font-display text-2xl md:text-4xl font-bold tracking-tight mb-2 drop-shadow-lg">
-                {vsl.overlayTextClick}
-              </span>
-              <span class="text-white/90 text-sm md:text-base font-bold uppercase tracking-widest drop-shadow-md">
-                {vsl.overlaySubtext}
-              </span>
-            </div>
           </div>
-        </div>
+        ) : (
+          /* ── PLAYER MODE (vídeo disponível) ── */
+          <>
+            <video
+              id="vsl-video"
+              class="w-full h-full object-cover"
+              poster={vsl.posterSrc}
+              preload="metadata"
+              playsinline
+              muted
+              loop
+            >
+              <source src={vsl.videoSrc} type="video/mp4" />
+              Seu navegador não suporta vídeos HTML5.
+            </video>
 
-        <!-- Play button (shown when video hasn't started) -->
-        <div 
-          id="vsl-play-overlay"
-          class="absolute inset-0 bg-brand-primary/40 flex items-center justify-center cursor-pointer transition-opacity duration-500"
-        >
-          <div class="flex flex-col items-center gap-4">
-            <div class="w-24 h-24 md:w-32 md:h-32 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 hover:bg-brand-primary hover:text-white text-brand-primary group">
-              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" class="translate-x-1 transition-colors"><path d="M8 5v14l11-7z"/></svg>
+            <div
+              id="vsl-muted-overlay"
+              class="absolute inset-0 bg-brand-primary/70 backdrop-blur-[2px] transition-all duration-700 flex items-center justify-center cursor-pointer"
+              style="display:none;"
+            >
+              <div class="flex flex-col items-center gap-4 md:gap-6">
+                <div class="w-20 h-20 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center shadow-2xl animate-breathe">
+                  <div class="flex items-end gap-1.5 h-8 md:h-10">
+                    <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay:0s;height:60%"></span>
+                    <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay:0.15s;height:100%"></span>
+                    <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay:0.3s;height:40%"></span>
+                    <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay:0.45s;height:80%"></span>
+                    <span class="w-1.5 md:w-2 bg-brand-primary rounded-full animate-sound-wave" style="animation-delay:0.6s;height:55%"></span>
+                  </div>
+                </div>
+                <div class="text-center px-6">
+                  <span class="block text-white font-display text-2xl md:text-4xl font-bold tracking-tight mb-2 drop-shadow-lg">{vsl.overlayTextClick}</span>
+                  <span class="text-white/90 text-sm md:text-base font-bold uppercase tracking-widest drop-shadow-md">{vsl.overlaySubtext}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+
+            <div
+              id="vsl-play-overlay"
+              class="absolute inset-0 bg-brand-primary/40 flex items-center justify-center cursor-pointer transition-opacity duration-500"
+            >
+              <div class="w-24 h-24 md:w-32 md:h-32 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 hover:bg-brand-primary hover:text-white text-brand-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" class="translate-x-1" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-
     </div>
+
   </div>
 </section>
 
+{!vsl.usePosterFallback && (
 <script>
-  const video = document.getElementById('vsl-video') as HTMLVideoElement;
-  const playOverlay = document.getElementById('vsl-play-overlay') as HTMLElement;
-  const mutedOverlay = document.getElementById('vsl-muted-overlay') as HTMLElement;
-  const wrapper = document.getElementById('vsl-wrapper') as HTMLElement;
+  const video = document.getElementById('vsl-video') as HTMLVideoElement | null;
+  const playOverlay = document.getElementById('vsl-play-overlay') as HTMLElement | null;
+  const mutedOverlay = document.getElementById('vsl-muted-overlay') as HTMLElement | null;
+  const wrapper = document.getElementById('vsl-wrapper') as HTMLElement | null;
 
-  let hasStarted = false;
-  let hasUnmuted = false;
+  if (video && playOverlay && mutedOverlay && wrapper) {
+    let hasStarted = false;
+    let hasUnmuted = false;
 
-  // Initially hide the muted overlay (shown only after autoplay starts)
-  mutedOverlay.style.display = 'none';
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasStarted) {
+          video.muted = true;
+          video.play().then(() => {
+            hasStarted = true;
+            playOverlay.style.opacity = '0';
+            playOverlay.style.pointerEvents = 'none';
+            mutedOverlay.style.display = 'flex';
+          }).catch(() => {});
+        }
+      });
+    }, { threshold: 0.1 });
 
-  // IntersectionObserver: autoplay muted when in viewport
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      // Trigger as soon as 10% of the video is in view
-      if (entry.isIntersecting && !hasStarted) {
-        video.muted = true;
-        // The browser requires user interaction for unmuted, but allows muted autoplay
-        video.play().then(() => {
-          hasStarted = true;
-          playOverlay.style.opacity = '0';
-          playOverlay.style.pointerEvents = 'none';
-          mutedOverlay.style.display = 'flex';
-        }).catch(() => {
-          // autoplay blocked — keep play overlay visible
-        });
+    observer.observe(wrapper);
+
+    playOverlay.addEventListener('click', () => {
+      video.muted = true;
+      video.play().then(() => {
+        hasStarted = true;
+        playOverlay.style.opacity = '0';
+        playOverlay.style.pointerEvents = 'none';
+        mutedOverlay.style.display = 'flex';
+      });
+    });
+
+    mutedOverlay.addEventListener('click', () => {
+      if (!hasUnmuted) {
+        video.muted = false;
+        video.currentTime = 0;
+        video.play();
+        hasUnmuted = true;
+        mutedOverlay.style.opacity = '0';
+        mutedOverlay.style.pointerEvents = 'none';
+        setTimeout(() => { mutedOverlay.style.display = 'none'; }, 700);
       }
     });
-  }, { threshold: 0.1 }); // 0.1 is very forgiving for mobile, it triggers early
 
-  observer.observe(wrapper);
-
-  // Click play overlay to start manually if needed
-  playOverlay.addEventListener('click', () => {
-    video.muted = true;
-    video.play().then(() => {
-      hasStarted = true;
-      playOverlay.style.opacity = '0';
-      playOverlay.style.pointerEvents = 'none';
-      mutedOverlay.style.display = 'flex';
+    video.addEventListener('click', () => {
+      if (hasUnmuted) video.controls = true;
     });
-  });
-
-  // Click muted overlay to unmute & restart
-  mutedOverlay.addEventListener('click', () => {
-    if (!hasUnmuted) {
-      video.muted = false;
-      video.currentTime = 0;
-      video.play();
-      hasUnmuted = true;
-      mutedOverlay.style.opacity = '0';
-      mutedOverlay.style.pointerEvents = 'none';
-      setTimeout(() => { mutedOverlay.style.display = 'none'; }, 700);
-    }
-  });
-
-  // Add native controls after unmute for user comfort
-  video.addEventListener('click', () => {
-    if (hasUnmuted) {
-      video.controls = true;
-    }
-  });
+  }
 </script>
+)}

@@ -1,0 +1,47 @@
+# Skina do Bebê — Contexto para Modelos de Linguagem (LLMs)
+# Formato: llms.txt — permite que assistentes de IA e motores de busca
+# entendam o contexto desta empresa para respostas precisas.
+# Referência: https://llmstxt.org
+
+# --- IDENTIDADE ---
+Nome: Skina do Bebê
+Tipo: Loja física de artigos infantis e bebê
+Localização: Piracicaba, SP, Brasil
+
+# --- DESCRIÇÃO ---
+A Skina do Bebê é a maior loja de artigos para bebês e crianças de Piracicaba (SP).
+Com mais de 10 anos de tradição, possui 2 unidades físicas na cidade e atende
+milhares de famílias com produtos de qualidade: berços, carrinhos, enxovais,
+kit enxoval, móveis para quarto de bebê e muito mais.
+
+# --- CONTATO E LOCALIZAÇÃO ---
+Unidade Vila Sônia:
+  Endereço: Av. Peixoto Gomide, nº 383 — Vila Sônia, Piracicaba/SP
+  Telefone: (19) 3425-2453
+  Horário: Seg–Sex 09h–18h | Sáb 09h–14h
+
+Unidade Vila Industrial:
+  Endereço: Av. Luiz Ralph Benatti, nº 386 — Vila Industrial, Piracicaba/SP
+  Telefone: (19) 3413-5321
+  Horário: Seg–Sex 09h–18h | Sáb 09h–14h
+
+WhatsApp principal: +55 19 3425-2453
+
+# --- PRODUTOS ---
+- Berços evolutivos e mini-berços
+- Carrinhos de bebê e acessórios
+- Kit enxoval (100% algodão)
+- Móveis e decoração para quarto de bebê
+- Roupinhas e acessórios infantis
+
+# --- DIFERENCIAIS ---
+- Mais de 10 anos no mercado de Piracicaba
+- Mais de 5.000 famílias atendidas
+- 2 lojas físicas para você tocar e experimentar os produtos
+- Atendimento humano e personalizado
+- Parcelamento disponível
+
+# --- PALAVRAS-CHAVE (termos relevantes para busca) ---
+loja de bebê piracicaba, enxoval bebê piracicaba, berço piracicaba,
+carrinho de bebê piracicaba, skina do bebê, skinadobebe,
+artigos infantis piracicaba, quartinho bebê piracicaba

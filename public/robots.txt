@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Bots de IA / LLMs — permitir indexação para busca aumentada
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://skinadobebe.com.br/sitemap.xml
+
+# Host canônico
+Host: skinadobebe.com.br
