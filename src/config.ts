@@ -90,14 +90,14 @@ export const config = {
         featureImage: "",
 
         pillText: "A MAIOR LOJA DE BEBÊS DE PIRACICABA",
-        headlineLine1: "Onde o enxoval",
-        headlineLine2: "dos seus",
-        headlineHighlight: "sonhos",
-        headlineLine3: "se torna realidade.",
-        subheadline: "Mais que uma loja, um espaço de carinho e tradição há mais de 10 anos em Piracicaba. Venha conhecer.",
+        headlineLine1: "Transformando",
+        headlineLine2: "sonhos em",
+        headlineHighlight: "realidade",
+        headlineLine3: "há 24 anos em Piracicaba.",
+        subheadline: "Mais que uma loja, um espaço de carinho e tradição onde cada detalhe do enxoval do seu bebê é cuidadosamente escolhido.",
 
-        cta1Text: "FALE CONOSCO",
-        cta1Message: "Olá! Gostaria de conhecer os produtos da Skina do Bebê.",
+        cta1Text: "FALE COM UMA CONSULTORA",
+        cta1Message: "Olá! Gostaria de montar o enxoval dos sonhos do meu bebê.",
     },
 
     // ----------------------------------------------------------
@@ -107,18 +107,18 @@ export const config = {
     // o arquivo de vídeo em /public/videos/skina-vsl.mp4
     // ----------------------------------------------------------
     vsl: {
-        videoSrc: "/videos/skina-vsl.mp4",
-        videoAspectRatio: "aspect-[9/16]",
+        videoSrc: "https://youtu.be/gMhxgR11Vtg",
+        videoAspectRatio: "aspect-[16/9]",
         videoMaxHeightDesktop: "max-h-[80vh]",
         // true = mostra placeholder de imagem (sem tentar carregar o vídeo)
         // false = exibe o player de vídeo normalmente
-        usePosterFallback: true,
+        usePosterFallback: false,
         // Para usar poster local: "/images/vsl-poster.jpg"
         posterSrc: "https://i.postimg.cc/FR7zK7cL/740aa04e-5341-4fb2-aa82-c27cb0563102.webp",
         pillText: "CONHEÇA POR DENTRO",
         headlineLine1: "Viva a experiência",
-        headlineLine2: "Skina do Bebê",
-        subheadline: "Conheça nossa loja, nossos produtos e sinta a qualidade do atendimento que só a Skina oferece.",
+        headlineLine2: "Única",
+        subheadline: "Qualidade, Conforto e Atendimento que Você Merece. Nossos especialistas estão prontos para guiar você.",
         overlayTextClick: "🔊 CLIQUE PARA ATIVAR O SOM",
         overlaySubtext: "Seu vídeo já começou • Toque aqui",
     },
@@ -129,25 +129,25 @@ export const config = {
     // Deixe com 1 item enquanto não tiver fotos extras.
     // ----------------------------------------------------------
     destaques: {
-        pillText: "🔥 OFERTAS IMPERDÍVEIS",
-        headlineStart: "Especial",
-        headlineHighlight: "Dia das Mães",
-        subheadlineStart: "Selecionamos os itens",
-        subheadlineBold1: "mais amados",
-        subheadlineMiddle: "pelas mamães de Piracicaba. Preço e qualidade",
-        subheadlineBold2: "imbatíveis",
+        pillText: "🔥 NOVIDADES DE INVERNO",
+        headlineStart: "Mês do",
+        headlineHighlight: "Enxoval",
+        subheadlineStart: "Explore nossa",
+        subheadlineBold1: "coleção de inverno",
+        subheadlineMiddle: "com condições",
+        subheadlineBold2: "especiais",
         subheadlineEnd: "!",
         ctaText: "VER CATÁLOGO COMPLETO NO WHATSAPP",
         ctaMessage: "Olá! Gostaria de ver o catálogo completo da Skina do Bebê.",
         showTimer: true,
-        timerEndDate: "2026-05-10T23:59:59",
+        timerEndDate: "2026-06-30T23:59:59",
         timerText: "TEMPO RESTANTE DAS OFERTAS",
         products: [
             {
                 id: 1,
                 name: "Berço Evolutivo 3 em 1",
                 price: "Consulte o preço",
-                badge: "🔥 MAIS VENDIDO",
+                badge: "MAIS VENDIDO",
                 badgeClass: "badge-hot",
                 description: "De mini berço a mini cama. Acompanha o crescimento do seu bebê com segurança e estilo.",
                 // images: array de fotos. Adicione mais quando tiver os arquivos.
@@ -164,7 +164,7 @@ export const config = {
                 id: 2,
                 name: "Carrinho de Bebê Premium",
                 price: "Melhor preço garantido",
-                badge: "🤩 QUERIDINHO",
+                badge: "O MAIS DESEJADO",
                 badgeClass: "badge-popular",
                 description: "Conforto e segurança para os passeios do bebê. Chegou novo na loja!",
                 images: [
@@ -180,8 +180,9 @@ export const config = {
                 id: 3,
                 name: "Kit Enxoval Algodão",
                 price: "Peça seu orçamento",
-                badge: "✨ 100% ALGODÃO",
+                badge: "ENXOVAL PREMIUM",
                 badgeClass: "badge-exclusive",
+                isHighlighted: true, // Adicionado destaque especial
                 description: "Toque macio para a pele delicada do recém-nascido. Qualidade premium.",
                 images: [
                     "/images/produtos/enxoval-1.jpg",   // foto 1 (já aparece)
@@ -196,7 +197,7 @@ export const config = {
                 id: 4,
                 name: "Quartinho Completo",
                 price: "Projeto sob medida",
-                badge: "🚚 ENTREGA GRÁTIS",
+                badge: "PROJETO 3D",
                 badgeClass: "badge-hot",
                 description: "Montamos o quartinho dos sonhos com móveis premium sob medida.",
                 images: [
@@ -216,21 +217,20 @@ export const config = {
     // ----------------------------------------------------------
     history: {
         pillText: "Quem Somos",
-        headlineStart: "Uma história escrita com",
+        headlineStart: "24 Anos de História escrita com",
         headlineHighlight: "carinho",
         headlineHighlight1: "carinho",
         headlineMiddle: "e",
         headlineHighlight2: "dedicação",
         headlineEnd: ".",
         paragraphs: [
-            "Há mais de dez anos, a gente abre as portas da Skina do Bebê com o mesmo propósito de sempre: <strong>fazer parte do momento mais especial da sua vida</strong>. E a gente leva isso com muito orgulho — e uma responsabilidade enorme.",
-            "Aqui você não vai encontrar só prateleiras cheias de produto. Vai encontrar pessoas de verdade, prontas pra te ouvir, te ajudar a escolher o berço certo, aquele enxoval que você vai querer guardar pra sempre, o carrinho que vai fazer parte de cada passeio. <strong>Porque a gente entende que cada detalhe importa pra quem está esperando um bebê.</strong>",
-            "Pode chegar sem saber por onde começar. A gente está aqui exatamente pra isso. A <strong class='text-brand-primary'>Skina do Bebê</strong> tem orgulho de fazer parte da sua história — e de cuidar da família que o seu filho vai crescer."
+            "Desde 2002, a Skina do Bebê abre suas portas com um propósito inabalável: <strong>fazer parte do momento mais especial da sua vida</strong>. Não somos apenas uma loja; somos um legado de cuidado, confiança e amor, construído ao longo de mais de duas décadas em Piracicaba.",
+            "Nossa equipe é formada por pessoas que entendem a importância de cada escolha para o seu bebê. Estamos aqui para ouvir, aconselhar e garantir que você encontre exatamente o que precisa, com a qualidade e o carinho que só a Skina do Bebê oferece."
         ],
-        ownerImage: "https://i.postimg.cc/HnFqYhvn/Design-sem-nome-2026-02-26T175511-321.png",
-        statsBadge: "+10 Anos de Tradição",
+        ownerImage: "/images/baby-skina.png",
+        statsBadge: "+24 Anos de Tradição",
         stats: [
-            { number: "10+", labelLines: ["Anos de", "Experiência"], highlightColor: "text-brand-primary" },
+            { number: "24+", labelLines: ["Anos de", "Experiência"], highlightColor: "text-brand-primary" },
             { number: "2", labelLines: ["Lojas em", "Piracicaba"], highlightColor: "text-brand-primary" },
             { number: "5mil+", labelLines: ["Famílias", "Atendidas"], highlightColor: "text-brand-accent" }
         ],
@@ -255,7 +255,7 @@ export const config = {
                 whatsappNumber: "5519994799620",   // número principal da Vila Sônia
                 whatsappDisplay: "(19) 99479-9620", // exibido no card como texto
                 map: "https://www.google.com/maps/dir/?api=1&destination=-22.67230742029101,-47.69646412265463",
-                image: "/images/local/sonia.webp"
+                image: "/images/local/sonia.jpeg"
             },
             {
                 name: "Vila Industrial",

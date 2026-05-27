@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { config } from '../config';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title?: string;
@@ -216,5 +217,7 @@ const structuredData = {
         });
       });
     </script>
+
+    <CookieBanner />
   </body>
 </html>

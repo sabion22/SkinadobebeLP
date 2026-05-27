@@ -45,10 +45,10 @@ function getImages(product: Product): string[] {
       <!-- Direita: Timer elegante -->
       {destaques.showTimer && (
         <div class="flex justify-center lg:justify-end">
-          <div class="bg-white/60 backdrop-blur-lg rounded-[2rem] border border-white p-6 sm:p-7 flex flex-col sm:flex-row items-center gap-5 sm:gap-8 shadow-[0_15px_40px_rgba(0,0,0,0.05)] w-full max-w-[480px]" role="timer" aria-label="Contador das ofertas">
+          <div class="bg-white/60 backdrop-blur-lg rounded-[2rem] border border-white p-6 sm:p-7 flex flex-col sm:flex-row items-center gap-5 sm:gap-8 shadow-[0_15px_40px_rgba(0,0,0,0.05)] w-fit max-w-full" role="timer" aria-label="Contador das ofertas">
             <div class="flex flex-col items-center sm:items-start flex-shrink-0">
                <span class="text-[9px] font-black tracking-[0.25em] uppercase text-brand-primary mb-2">Oferta Especial</span>
-               <span class="text-gray-900 font-display text-lg sm:text-xl leading-snug text-center sm:text-left max-w-[140px]">{destaques.timerText}</span>
+               <span class="text-gray-900 font-display font-bold text-base sm:text-xl leading-snug text-center sm:text-left whitespace-nowrap sm:whitespace-normal max-w-full sm:max-w-[160px]">{destaques.timerText}</span>
             </div>
             
             <div id="countdown-timer" class="flex items-center justify-between w-full sm:w-auto sm:justify-start gap-1 sm:gap-2 shrink-0" data-end={destaques.timerEndDate}>
@@ -77,10 +77,9 @@ function getImages(product: Product): string[] {
       )}
     </div>
 
-    <!-- PRODUTOS (mobile: scroll nativo snap; desktop: grid 4 colunas) -->
     <div
       id="products-scroll"
-      class="overflow-x-auto md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 pb-6 md:pb-0"
+      class="overflow-x-auto md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 py-6 md:py-4"
     >
       <div class="products-flex flex flex-nowrap w-max md:w-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
         {destaques.products.map((product) => {
@@ -89,13 +88,13 @@ function getImages(product: Product): string[] {
           const carouselId = `carousel-${product.id}`;
           return (
             <div
-              class="product-card shrink-0 w-[76vw] sm:w-72 md:w-auto group flex flex-col"
+              class={`product-card shrink-0 w-[76vw] sm:w-72 md:w-auto group flex flex-col relative ${product.isHighlighted ? 'scale-[1.02] md:scale-105 z-10' : ''}`}
               data-total={imgs.length}
             >
               <!-- Carrossel de fotos do produto -->
               <div
                 id={carouselId}
-                class="product-photo-carousel relative rounded-[1.75rem] overflow-hidden bg-gray-100 shadow-[0_12px_40px_rgba(0,0,0,0.07)]"
+                class={`product-photo-carousel relative rounded-[1.75rem] overflow-hidden bg-gray-100 shadow-[0_12px_40px_rgba(0,0,0,0.07)] ${product.isHighlighted ? 'border-[3px] border-brand-primary shadow-[0_15px_40px_rgba(217,20,121,0.25)] ring-4 ring-brand-primary/10' : ''}`}
                 style="aspect-ratio:4/5;"
                 data-carousel
               >
@@ -108,8 +107,6 @@ function getImages(product: Product): string[] {
                       alt={`${product.name} — foto ${i + 1}`}
                       class="shrink-0 object-cover"
                       style="width:100%;height:100%;flex-shrink:0;"
-                      loading={i === 0 ? 'eager' : 'lazy'}
-                      decoding="async"
                     />
                   ))}
                 </div>
@@ -148,11 +145,8 @@ function getImages(product: Product): string[] {
                 <h3 class="text-lg md:text-xl font-display text-gray-900 group-hover:text-brand-primary transition-colors duration-300 mb-1.5 leading-tight">
                   {product.name}
                 </h3>
-                <p class="text-gray-400 text-[12px] md:text-sm leading-relaxed line-clamp-2 mb-3">
+                <p class="text-gray-400 text-[12px] md:text-sm leading-relaxed line-clamp-2">
                   {product.description}
-                </p>
-                <p class="text-brand-primary font-black text-[11px] uppercase tracking-widest mt-auto">
-                  {product.price}
                 </p>
               </div>
             </div>
@@ -168,7 +162,7 @@ function getImages(product: Product): string[] {
         target="_blank"
         rel="noopener noreferrer"
         id="destaques-cta"
-        class="btn-whatsapp px-10 md:px-16 py-4 md:py-5 text-sm md:text-base font-black tracking-wide animate-pulse-glow w-full sm:w-auto justify-center"
+        class="btn-whatsapp flex items-center justify-center gap-3 px-10 md:px-16 py-4 md:py-5 text-sm md:text-base font-black tracking-wide animate-pulse-glow w-full sm:w-auto text-center"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z"/></svg>
         <span>{destaques.ctaText}</span>
@@ -182,14 +176,10 @@ function getImages(product: Product): string[] {
   /* ── MOBILE SCROLL ── */
   @media (max-width: 767px) {
     #products-scroll {
-      scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      cursor: grab;
     }
-    #products-scroll:active { cursor: grabbing; }
     #products-scroll::-webkit-scrollbar { display: none; }
-    .product-card { scroll-snap-align: start; }
   }
 </style>
 
@@ -206,7 +196,9 @@ function getImages(product: Product): string[] {
     function tick() {
       const dist = endMs - Date.now();
       if (dist < 0) {
-        timerEl.innerHTML = '<span style="color:#d91479;font-weight:900;font-size:1rem;letter-spacing:0.1em;">OFERTA ENCERRADA</span>';
+        timerEl.innerHTML = '<div class="w-full text-center py-2"><span style="color:#d91479;font-weight:900;font-size:1.1rem;letter-spacing:0.1em;text-transform:uppercase;">Oferta Encerrada</span><br/><span style="font-size:0.75rem;color:#888;">Fale com uma consultora para novas ofertas</span></div>';
+        timerEl.classList.remove('justify-start');
+        timerEl.classList.add('justify-center');
         return;
       }
       const d = Math.floor(dist / 86400000);
@@ -222,7 +214,7 @@ function getImages(product: Product): string[] {
     setInterval(tick, 1000);
   })();
 
-  // ── AUTO-SCROLL LENTO DA GALERIA DE PRODUTOS (mobile only) ─
+  // ── AUTO-SCROLL CONTÍNUO E INFINITO (mobile only) ─
   (function initProductsAutoScroll() {
     const scroller = document.getElementById('products-scroll') as HTMLElement | null;
     const track = scroller?.querySelector('.products-flex') as HTMLElement | null;
@@ -231,47 +223,65 @@ function getImages(product: Product): string[] {
     // Só ativa no mobile (largura < 768px)
     if (window.innerWidth >= 768) return;
 
-    // Desativa span no CSS para que o JS possa rolar 1px fluidamente
-    scroller.style.scrollSnapType = 'none';
-
-    // Duplica o conteúdo (HTML) para criar efeito infinito sem pulo seco
+    // Para o scroll infinito funcionar e ser contínuo, precisamos duplicar as 4 cartas originais.
+    // Assim, quando a carta 4 sair da tela pela esquerda, a cópia da carta 1 já está colada nela.
     const originalHTML = track.innerHTML;
     track.innerHTML = originalHTML + originalHTML;
 
-    let halfWidth = 0;
-    setTimeout(() => { 
-       halfWidth = scroller.scrollWidth / 2; 
-    }, 500);
+    // Desativa completamente o snap via JS para garantir que não haja pulos
+    scroller.style.scrollSnapType = 'none';
 
-    let scrollPos = 0;
     let reqId: number;
     let touched = false;
+    let isDragging = false;
+    let scrollPos = scroller.scrollLeft;
 
     function crawl() {
-      if (!touched && halfWidth > 0) {
-        scrollPos += 0.4; // bem devagar
-        if (scrollPos >= halfWidth) {
-          scrollPos = 0;
-        }
-        scroller!.scrollLeft = scrollPos;
+      // Se a largura não estiver calculada, espera
+      if (scroller!.scrollWidth <= 0) {
+        reqId = requestAnimationFrame(crawl);
+        return;
       }
+
+      // A metade exata da largura de rolagem representa o primeiro conjunto de 4 itens
+      // (pois duplicamos o conteúdo).
+      const halfWidth = scroller!.scrollWidth / 2;
+
+      if (!touched) {
+        // Incremento super suave e contínuo mais devagar (Marquee)
+        scrollPos += 0.35;
+        
+        // Loop infinito seamless: se passamos do primeiro conjunto, resetamos para 0
+        // Como o conjunto duplicado é idêntico, o usuário não percebe o reset visualmente.
+        if (scrollPos >= halfWidth) {
+          scrollPos -= halfWidth; 
+        }
+        
+        scroller!.scrollLeft = scrollPos;
+      } else {
+        // Se o usuário está tocando/arrastando, atualiza a variável com a posição real dele
+        scrollPos = scroller!.scrollLeft;
+        
+        // Mantém a ilusão do infinito mesmo se ele puxar rápido pro lado
+        if (scrollPos >= halfWidth) {
+          scroller!.scrollLeft = scrollPos - halfWidth;
+        } else if (scrollPos <= 0) {
+          scroller!.scrollLeft = scrollPos + halfWidth;
+        }
+      }
+
       reqId = requestAnimationFrame(crawl);
     }
-    requestAnimationFrame(crawl);
+    
+    // Inicia a animação contínua
+    reqId = requestAnimationFrame(crawl);
 
     scroller.addEventListener('touchstart', () => {
       touched = true;
-      cancelAnimationFrame(reqId);
-      scroller!.style.scrollSnapType = 'x mandatory'; 
     }, { passive: true });
 
     scroller.addEventListener('touchend', () => {
-      setTimeout(() => {
-        touched = false;
-        scroller!.style.scrollSnapType = 'none'; 
-        scrollPos = scroller!.scrollLeft; 
-        requestAnimationFrame(crawl);
-      }, 1500);
+      touched = false;
     }, { passive: true });
   })();
 
@@ -295,28 +305,8 @@ function getImages(product: Product): string[] {
 
     let interval = window.setInterval(() => goTo(current + 1), 3000);
 
-    // Touch
-    let touchX = 0;
-    carousel.addEventListener('touchstart', e => {
-      touchX = e.touches[0].clientX;
-      clearInterval(interval);
-    }, { passive: true });
-    carousel.addEventListener('touchend', e => {
-      const diff = touchX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 35) goTo(current + (diff > 0 ? 1 : -1));
-      interval = window.setInterval(() => goTo(current + 1), 3000);
-    }, { passive: true });
-
-    // Mouse drag
-    let mouseX = 0, dragging = false;
-    carousel.addEventListener('mousedown', e => { mouseX = e.clientX; dragging = true; clearInterval(interval); });
-    carousel.addEventListener('mouseup', e => {
-      if (!dragging) return;
-      dragging = false;
-      const diff = mouseX - e.clientX;
-      if (Math.abs(diff) > 35) goTo(current + (diff > 0 ? 1 : -1));
-      interval = window.setInterval(() => goTo(current + 1), 3000);
-    });
-    carousel.addEventListener('mouseleave', () => { dragging = false; });
+    // O usuário pediu que as fotos do produto passem apenas automaticamente, sem controle manual,
+    // para que o swipe na tela inteira funcione perfeitamente para a galeria.
+    // Nenhuma interação de touch/mouse é necessária aqui.
   });
 </script>
