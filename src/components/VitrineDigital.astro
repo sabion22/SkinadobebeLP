@@ -215,16 +215,19 @@ function getImages(product: Product): string[] {
   })();
 
   // ── AUTO-SCROLL CONTÍNUO E INFINITO (mobile only) ─
-  (function initProductsAutoScroll() {
+  function initProductsAutoScroll() {
     const scroller = document.getElementById('products-scroll') as HTMLElement | null;
     const track = scroller?.querySelector('.products-flex') as HTMLElement | null;
-    if (!scroller || !track) return;
+    
+    // Cancela se não encontrar elementos ou se já foi inicializado
+    if (!scroller || !track || scroller.dataset.autoScrollInit) return;
     
     // Só ativa no mobile (largura < 768px)
     if (window.innerWidth >= 768) return;
 
+    scroller.dataset.autoScrollInit = "true";
+
     // Para o scroll infinito funcionar e ser contínuo, precisamos duplicar as 4 cartas originais.
-    // Assim, quando a carta 4 sair da tela pela esquerda, a cópia da carta 1 já está colada nela.
     const originalHTML = track.innerHTML;
     track.innerHTML = originalHTML + originalHTML;
 
@@ -233,7 +236,6 @@ function getImages(product: Product): string[] {
 
     let reqId: number;
     let touched = false;
-    let isDragging = false;
     let scrollPos = scroller.scrollLeft;
 
     function crawl() {
@@ -243,26 +245,21 @@ function getImages(product: Product): string[] {
         return;
       }
 
-      // A metade exata da largura de rolagem representa o primeiro conjunto de 4 itens
-      // (pois duplicamos o conteúdo).
+      // A metade exata da largura de rolagem representa o primeiro conjunto
       const halfWidth = scroller!.scrollWidth / 2;
 
       if (!touched) {
-        // Incremento super suave e contínuo mais devagar (Marquee)
-        scrollPos += 0.35;
+        // Velocidade otimizada para garantir o movimento fluido sem travar em subpixels
+        scrollPos += 0.5;
         
-        // Loop infinito seamless: se passamos do primeiro conjunto, resetamos para 0
-        // Como o conjunto duplicado é idêntico, o usuário não percebe o reset visualmente.
         if (scrollPos >= halfWidth) {
           scrollPos -= halfWidth; 
         }
         
         scroller!.scrollLeft = scrollPos;
       } else {
-        // Se o usuário está tocando/arrastando, atualiza a variável com a posição real dele
         scrollPos = scroller!.scrollLeft;
         
-        // Mantém a ilusão do infinito mesmo se ele puxar rápido pro lado
         if (scrollPos >= halfWidth) {
           scroller!.scrollLeft = scrollPos - halfWidth;
         } else if (scrollPos <= 0) {
@@ -273,17 +270,14 @@ function getImages(product: Product): string[] {
       reqId = requestAnimationFrame(crawl);
     }
     
-    // Inicia a animação contínua
     reqId = requestAnimationFrame(crawl);
 
-    scroller.addEventListener('touchstart', () => {
-      touched = true;
-    }, { passive: true });
+    scroller.addEventListener('touchstart', () => { touched = true; }, { passive: true });
+    scroller.addEventListener('touchend', () => { touched = false; }, { passive: true });
+  }
 
-    scroller.addEventListener('touchend', () => {
-      touched = false;
-    }, { passive: true });
-  })();
+  initProductsAutoScroll();
+  document.addEventListener('DOMContentLoaded', initProductsAutoScroll);
 
   // ── CARROSSEL DE FOTOS POR PRODUTO ──────────────────────
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(carousel => {
