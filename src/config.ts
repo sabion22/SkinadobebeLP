@@ -114,7 +114,7 @@ export const config = {
         // false = exibe o player de vídeo normalmente
         usePosterFallback: false,
         // Para usar poster local: "/images/vsl-poster.jpg"
-        posterSrc: "https://i.postimg.cc/FR7zK7cL/740aa04e-5341-4fb2-aa82-c27cb0563102.webp",
+        posterSrc: "/images/local/sonia.jpeg",
         pillText: "CONHEÇA POR DENTRO",
         headlineLine1: "Viva a experiência",
         headlineLine2: "Única",
