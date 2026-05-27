@@ -118,7 +118,7 @@ export const config = {
         pillText: "CONHEÇA POR DENTRO",
         headlineLine1: "Viva a experiência",
         headlineLine2: "Única",
-        subheadline: "Qualidade, Conforto e Atendimento que Você Merece. Nossos especialistas estão prontos para guiar você.",
+        subheadline: "Qualidade, conforto e atendimento que você merece. Nossos especialistas estão prontos para guiar você.",
         overlayTextClick: "🔊 CLIQUE PARA ATIVAR O SOM",
         overlaySubtext: "Seu vídeo já começou • Toque aqui",
     },

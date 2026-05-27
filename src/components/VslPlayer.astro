@@ -92,50 +92,49 @@ const { vsl } = config;
     const poster = document.getElementById('vsl-poster-container');
     const container = document.getElementById('vsl-iframe-container');
 
-    // Se não encontrou, ou se já inicializou, cancela
     if (!poster || !container || poster.dataset.initialized) return;
     
     poster.dataset.initialized = "true";
 
+    // Pre-load the iframe on mobile so the click triggers postMessage synchronously
+    const videoSrc = poster.dataset.video || '';
+    let embedUrl = videoSrc;
+    if (videoSrc.includes('youtu')) {
+      const videoId = videoSrc.split('youtu.be/')[1]?.split('?')[0] || videoSrc.split('v=')[1]?.split('&')[0];
+      // enablejsapi=1 is crucial for postMessage to work
+      embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0&mute=0&playsinline=1&rel=0&modestbranding=1&controls=1`;
+    }
+    
+    // Inject the iframe hidden and waiting
+    container.innerHTML = `<iframe id="youtube-iframe" src="${embedUrl}" title="Video Skina do Bebe" class="absolute inset-0 w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    
     poster.addEventListener('click', () => {
-      const videoSrc = poster.dataset.video || '';
-      
-      // Formata a URL do YouTube para embutir com autoplay imediato
-      let embedUrl = videoSrc;
-      if (videoSrc.includes('youtu')) {
-        const videoId = videoSrc.split('youtu.be/')[1]?.split('?')[0] || videoSrc.split('v=')[1]?.split('&')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1&rel=0&modestbranding=1&controls=1`;
-      }
-      
-      // Injeta o iframe
-      container.innerHTML = `<iframe id="youtube-iframe" src="${embedUrl}" title="Video Skina do Bebe" class="absolute inset-0 w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-      
-      // Esconde o poster
+      // Reveal the iframe and hide the poster
       poster.style.display = 'none';
 
-      // Dispara o modo Tela Cheia usando a permissão do clique do usuário
-      // Um pequeno timeout garante que o navegador já renderizou o iframe no DOM
-      setTimeout(() => {
-        const iframe = document.getElementById('youtube-iframe') as any;
-        if (iframe) {
+      const iframe = document.getElementById('youtube-iframe') as HTMLIFrameElement;
+      if (iframe && iframe.contentWindow) {
+        // Send play command to YouTube iframe
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo' }), '*');
+        
+        // Attempt Fullscreen
+        setTimeout(() => {
           try {
             if (iframe.requestFullscreen) {
               iframe.requestFullscreen();
-            } else if (iframe.webkitRequestFullscreen) { /* Safari / iOS */
-              iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) { /* IE/Edge antigo */
-              iframe.msRequestFullscreen();
+            } else if ((iframe as any).webkitRequestFullscreen) {
+              (iframe as any).webkitRequestFullscreen();
+            } else if ((iframe as any).msRequestFullscreen) {
+              (iframe as any).msRequestFullscreen();
             }
           } catch (e) {
-            console.warn("Navegador bloqueou tela cheia automática", e);
+            console.warn("Fullscreen blocked", e);
           }
-        }
-      }, 50);
+        }, 50);
+      }
     });
   }
 
-  // Tenta rodar imediatamente caso o DOM já esteja pronto
   initVsl();
-  // Caso não esteja pronto, garante a execução no carregamento
   document.addEventListener('DOMContentLoaded', initVsl);
 </script>
