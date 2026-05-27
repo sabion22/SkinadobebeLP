@@ -20,7 +20,7 @@ export const config = {
         logoSrc: "https://i.postimg.cc/MTqBM3BB/logo-skina-do-bebe-(1).png",
         logoAlt: "Logo Skina do Bebê",
         logoWidth: "w-12 md:w-16",
-        faviconSrc: "/favicon.svg",
+        faviconSrc: "/favicon.png",
     },
 
     // ----------------------------------------------------------
